@@ -2,12 +2,9 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-
-//1.
+const db = require("./model");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-var productsRouter = require("./routes/products.routes");
-var loginRouter = require("./routes/users.routes");
 
 var app = express();
 
@@ -16,11 +13,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+//db.sequelize.sync({force:true});
+db.sequelize.sync({});
 
-//2.
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/products", productsRouter);
-app.use("/user", loginRouter);
 
 module.exports = app;
+
+//file upload // email // scheduling // server side pagination // fs // git // sq joins

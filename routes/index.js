@@ -1,11 +1,12 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
+const userController = require("../controllers/users.controllers");
+/* GET users listing. */
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-
+router.post("/", userController.getAll);
+router.post("/create", userController.createUser);
+router.post("/update/:id", userController.updateUser);
+router.post("/delete/:id", userController.deleteUser);
+router.post("/search/:id", userController.searchUser);
 
 module.exports = router;
