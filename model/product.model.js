@@ -1,30 +1,26 @@
 module.exports = (Sequelize,sequelize)=>{
   const model = sequelize.define(
-      "users",
+      "product",
       {
-          id:{
+          prod_id:{
               type: Sequelize.INTEGER,
               primaryKey: true,
               autoIncrement: true,
               allowNull: false
           },
-          Name:{
+          prod_name:{
               type:Sequelize.STRING,
               allowNull: false,
           },
-          Mobile:{
-              type:Sequelize.STRING,
+          prod_qty:{
+            type:Sequelize.INTEGER,
+            allowNull:false,  
+          },
+          created_by:{
+              type:Sequelize.INTEGER,
               allowNull: false
           },
-          Email:{
-              type:Sequelize.STRING,
-              allowNull: false,
-              unique : true
-          },
-          Password:{
-              type: Sequelize.STRING,
-              allowNull: false
-          }
+          
       },
       {
           freezeTableName: true,

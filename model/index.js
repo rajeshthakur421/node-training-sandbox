@@ -5,25 +5,23 @@ const sequelize = new Sequelize(
   "u190533072_springbootapit",
   "u190533072_springbootapi",
   "@Gk8xry4PsWyaF@",
-  { host: "sql208.main-hosting.eu", dialect: "mysql" }
+  { host: "sql208.main-hosting.eu", dialect: "mysql" }  
 );
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("connected with DB");
-  })
-  .catch((err) => {
-    console.log("unable to connect with DB", err);
-  });
+sequelize.authenticate().then(()=>{
+    console.log("CONNECTED WITH DB")
+}).catch(err=>{
+    console.log("UNABLE TO CONNECT WITH DB",err);
+})
 
 const db = {};
-db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-db.users = require("./users.model")(sequelize, Sequelize);
-db.dept = require("./dept.model")(sequelize, Sequelize);
+db.sequelize = sequelize;
+db.users = require('./users.model')(Sequelize,sequelize);
+db.categories = require('./categories.model')(Sequelize,sequelize);
+db.product = require('./product.model')(Sequelize,sequelize);
 
-db.dept.hasMany(db.users);
-db.users.belongsTo(db.dept);
+db.categories.hasMany(db.product);
+db.product.belongsTo(db.categories);
 
 module.exports = db;
