@@ -2,6 +2,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var cors = require("cors");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -12,7 +13,23 @@ const productRouter = require("./routes/products");
 const db = require("./model/index");
 const middleware = require("./middleware/jwt.middleware");
 
-var app = express();
+const app = express();
+
+/*var corsOptions = function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization, Content-Length, X-Requested-With"
+  );
+  next();  
+};*/
+
+const corsOptions = {
+  origin: "*",
+  optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 
 app.use(logger("dev"));
 app.use(express.json());
