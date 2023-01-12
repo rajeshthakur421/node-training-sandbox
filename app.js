@@ -3,11 +3,14 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
-//1.
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-var productsRouter = require("./routes/products.routes");
-var loginRouter = require("./routes/users.routes");
+const loginRouter = require("./routes/users");
+const categoriesRouter = require("./routes/categories");
+const productRouter = require("./routes/products");
+
+const db = require("./model/index");
+const middleware = require("./middleware/jwt.middleware");
 
 var app = express();
 
@@ -17,10 +20,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-//2.
+db.sequelize.sync({});
+
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/products", productsRouter);
+// app.use('/users',middleware.checkToken, usersRouter);
+app.use("/categories", categoriesRouter);
+app.use("/product", productRouter);
+
 app.use("/user", loginRouter);
 
 module.exports = app;
