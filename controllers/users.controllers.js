@@ -26,7 +26,11 @@ module.exports = {
       users
         .create(user)
         .then((users) => {
-          res.send(users);
+          res.send({
+            error: false,
+            message: "New user created",
+          });
+          //res.send({ error: false, message: "User created" }, users);
         })
         .catch((err) => {
           res.send(err);
@@ -66,10 +70,10 @@ module.exports = {
         res.send(err);
       });
   },
-  searchUser:(req, res)=>{
-    const id=req.params.id;
+  searchUser: (req, res) => {
+    const id = req.params.id;
     users
-      .findAll({where:{id:id}})
+      .findAll({ where: { id: id } })
       .then((result) => {
         res.send(result);
       })
@@ -77,20 +81,22 @@ module.exports = {
         res.send(err);
       });
   },
-  deleteUser:(req, res)=>{
-    let id=req.params.id;
-    users.destroy({where:{id:id},truncate:false}).then((data) => {
-        if(data>0){
-            res.send({error:false, message:"User deleted"});
-        }else{
-            res.send({error:false, message:"User not deleted"}); 
+  deleteUser: (req, res) => {
+    let id = req.params.id;
+    users
+      .destroy({ where: { id: id }, truncate: false })
+      .then((data) => {
+        if (data > 0) {
+          res.send({ error: false, message: "User deleted" });
+        } else {
+          res.send({ error: false, message: "User not deleted" });
         }
-
-    }).catch((err) => {
+      })
+      .catch((err) => {
         res.send(err);
       });
   },
-  
+
   loginUser: (req, res) => {
     let userName = req.body.userName;
     let Password = req.body.Password;
